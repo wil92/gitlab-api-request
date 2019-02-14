@@ -2,7 +2,7 @@ const request = require("request");
 const _ = require("lodash");
 
 const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
-const apiVersion = process.env['GL_API_VERSION'] || "/api/v4";
+const apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
 const apiEndpoint = process.env['GL_ENDPOINT'] || "/issues";
 const queryParams = {
     "scope": "assigned_to_me",
