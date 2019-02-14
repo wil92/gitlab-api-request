@@ -1,9 +1,9 @@
 const request = require("request");
 const _ = require("lodash");
 
-const gitlabUrlApi = process.env['GITLAB_URL'] || "https://gitlab.com";
-const apiVersion = process.env['GITLAB_API_VERSION'] || "/api/v4";
-const apiEndpoint = process.env['GITLAB_ENDPOINT'] || "/issues";
+const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
+const apiVersion = process.env['GL_API_VERSION'] || "/api/v4";
+const apiEndpoint = process.env['GL_ENDPOINT'] || "/issues";
 const queryParams = {
     "scope": "assigned_to_me",
     "milestone": "2019-02",
@@ -25,7 +25,7 @@ console.log('url', url);
 const options = {
     url,
     headers: {
-        'PRIVATE-TOKEN': process.env['TOKEN'] || ''
+        'PRIVATE-TOKEN': process.env['GL_TOKEN'] || ''
     }
 };
 
