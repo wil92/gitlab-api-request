@@ -21,7 +21,7 @@ git clone https://gitlab.com/wil92/wankar-server.git
 - Export this environment variables
 
   * `GL_TOKEN`: User personal token for access to the gitlab api. ex: `faDdf234AD`. (**required**)
-  * `GL_URL`: Gitlab repository url. ex: `https://gitlab.com`. (**required**)
+  * `GL_URL`: Gitlab repository url. ex: `https://gitlab.com`.
   * `GL_API_VERSION`: Gitlab repository API version. ex: `v4`.
   * `GL_ENDPOINT`: port for expose the project database, ex: `issues`. (**required**)
 
