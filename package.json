@@ -1,0 +1,19 @@
+{
+  "name": "gitlab-api-request",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Guillermo",
+    "email": "guille@aleph.engineering"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "request": "^2.88.0"
+  }
+}
