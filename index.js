@@ -1,59 +1,31 @@
-const request = require("request");
-const _ = require("lodash");
+#!/usr/bin/env node
 
-const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
-const apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
-const apiEndpoint = process.env['GL_ENDPOINT'] || "/issues";
-const queryParams = {
-    "scope": "assigned_to_me",
-    "milestone": "2019-02",
-    "per_page": "100",
-    "page": "1"
-};
+const program = require("commander");
 
-function addQueryParams(queryParams) {
-    return _.reduce(
-        queryParams,
-        (queries, value, key) => queries === "" ? `${key}=${value}` : `${queries}&${key}=${value}`,
-        ""
-    );
-}
+const issues = require("./api/issues");
+const publishEnv = require("./api/utils/publish-env");
+const package = require("./package.json");
 
-const url = `${gitlabUrlApi}${apiVersion}${apiEndpoint}?${addQueryParams(queryParams)}`;
-console.log('url', url);
+program
+    .version(package.version, '-v, --version')
+    .option('-t, --token <token>', 'user personal token', function (arg) {
+        publishEnv('GL_TOKEN', arg);
+    })
+    .option('-l, --logs <level>', 'logs level [error, info, log]', function (arg) {
+        publishEnv('GL_VERBOSE', arg);
+    }, 'error')
+    .option('-a, --api <version>', 'api version', function (arg) {
+        publishEnv('GL_API_VERSION', arg);
+    }, 'v4')
+    .option('-u, --url <url>', 'gitlab url', function (arg) {
+        publishEnv('GL_URL', arg);
+    }, 'https://gitlab.com');
 
-const options = {
-    url,
-    headers: {
-        'PRIVATE-TOKEN': process.env['GL_TOKEN'] || ''
-    }
-};
+// issues
+program
+    .command('issues <action> [queries...]')
+    .description('<action> valid actions are [list, my-estimations]. [queries] query params to attach in the action')
+    .action(issues);
 
-function calculate(infoData) {
-    let time = 0;
-    let issues = 0;
-    let spentTime = 0;
-
-    infoData.forEach((data) => {
-        time += data['time_stats'] && data['time_stats']['time_estimate'] || 0;
-        spentTime += data['time_stats'] && data['time_stats']['total_time_spent'] || 0;
-        issues++;
-    });
-
-    console.log('Estimate', time);
-    console.log('Spent', spentTime);
-    console.log('Hours', (time + spentTime) / 3600);
-    console.log('Issues', issues);
-}
-
-function callback(error, response, body) {
-    if (error) {
-        return console.log('callback', error);
-    }
-    if (response.statusCode === 200) {
-        var info = JSON.parse(body);
-        calculate(info);
-    }
-}
-
-request(options, callback);
+program
+    .parse(process.argv);
