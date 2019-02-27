@@ -1,5 +1,6 @@
 const request = require("request");
-const reduce = require("lodash/reduce");
+
+const mergeQueryParams = require("./utils/query-params-utils").mergeQueryParams;
 
 const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
 const apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
@@ -46,14 +47,6 @@ const gl = {
     error: function (msg) {this.weight('error') <= this.weight(verbose) && console.error(msg)},
     weight: function (log) {return this.logs.indexOf(log) === -1 ? this.logs.length : this.logs.indexOf(log)}
 };
-
-function mergeQueryParams(queryParams) {
-    return reduce(
-        queryParams,
-        (queries, value, key) => queries === "" ? `${key}=${value}` : `${queries}&${key}=${value}`,
-        ""
-    );
-}
 
 function calculate(infoData) {
     let time = 0;
