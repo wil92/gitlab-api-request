@@ -1,4 +1,5 @@
 const request = require("request");
+const merge = require("lodash/merge");
 
 const mergeQueryParams = require("./utils/query-params-utils").mergeQueryParams;
 const argsToQueries = require("./utils/query-params-utils").argsToQueries;
@@ -11,10 +12,14 @@ const apiEndpoint = "/issues";
 
 module.exports = exports = function (action, queries) {
     this.list = list;
+    this.myEstimations = myEstimations;
 
     switch (action) {
         case 'list':
             list(argsToQueries(queries));
+            break;
+        case 'my-estimations':
+            myEstimations();
             break;
         default:
             gl.error('Not valid action, the actions are [list]');
@@ -36,6 +41,25 @@ function list(queryParams) {
 
     gl.info(url);
 
+    makeRequest(options, showList);
+}
+
+function myEstimations(queryParams) {
+    queryParams = merge(queryParams, {
+        "scope": "assigned_to_me"
+    });
+    const url = `${gitlabUrlApi}${apiVersion}${apiEndpoint}?${mergeQueryParams(queryParams)}`;
+    const options = {
+        url,
+        headers: {
+            'PRIVATE-TOKEN': process.env['GL_TOKEN'] || ''
+        }
+    };
+    gl.info(url);
+    makeRequest(options, calculate);
+}
+
+function makeRequest(options, callback) {
     request(options, function (error, response, body) {
         if (error) {
             return gl.error('issue', error);
@@ -44,7 +68,7 @@ function list(queryParams) {
         switch (response.statusCode) {
             case 200:
                 gl.log(info);
-                calculate(info);
+                callback(info);
                 break;
             case 401:
                 gl.error('issue', info.message);
@@ -53,19 +77,23 @@ function list(queryParams) {
     });
 }
 
+function showList(infoData) {
+    console.log('List of issues');
+    console.log(infoData);
+}
+
 function calculate(infoData) {
-    let time = 0;
+    let estimateTime = 0;
     let issues = 0;
     let spentTime = 0;
 
     infoData.forEach((data) => {
-        time += data['time_stats'] && data['time_stats']['time_estimate'] || 0;
+        estimateTime += data['time_stats'] && data['time_stats']['time_estimate'] || 0;
         spentTime += data['time_stats'] && data['time_stats']['total_time_spent'] || 0;
         issues++;
     });
 
-    console.log('Estimate', time);
-    console.log('Spent', spentTime);
-    console.log('Hours', (time + spentTime) / 3600);
+    console.log('Estimate', estimateTime / 3600);
+    console.log('Spent', spentTime / 3600);
     console.log('Issues', issues);
 }
