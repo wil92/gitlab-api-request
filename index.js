@@ -10,7 +10,10 @@ program
     .version(package.version, '-v, --version')
     .option('-t, --token <token>', 'user personal token', function (arg) {
         publishEnv('GL_TOKEN', arg);
-    });
+    })
+    .option('-u, --url <url>', 'gitlab url', function (arg) {
+        publishEnv('GL_URL', arg);
+    }, 'https://gitlab.com');
 
 // issues
 program

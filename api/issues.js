@@ -5,14 +5,17 @@ const mergeQueryParams = require("./utils/query-params-utils").mergeQueryParams;
 const argsToQueries = require("./utils/query-params-utils").argsToQueries;
 const gl = require("./utils/logs");
 
-const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
-const apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
+let gitlabUrlApi;
+let apiVersion;
 const apiEndpoint = "/issues";
 
 
 module.exports = exports = function (action, queries) {
     this.list = list;
     this.myEstimations = myEstimations;
+
+    gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
+    apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
 
     switch (action) {
         case 'list':
