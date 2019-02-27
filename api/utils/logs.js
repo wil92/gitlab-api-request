@@ -11,8 +11,8 @@ module.exports = exports = {
         this.weight('info') <= this.weight(verbose) && console.info(this.reduce(arguments));
     },
     error: function () {
-        console.error(this.reduce(arguments));
-        process.exit(1);
+        const verbose = process.env['GL_VERBOSE'] || 'error';
+        this.weight('error') <= this.weight(verbose) && console.error(this.reduce(arguments)) && process.exit(1);
     },
     reduce: function (args) {
         return reduce(args, function (arg, msg) {
@@ -20,6 +20,6 @@ module.exports = exports = {
         }, '');
     },
     weight: function (log) {
-        return this.logs.indexOf(log) === -1 ? this.logs.length : this.logs.indexOf(log);
+        return this.logs.indexOf(log);
     }
 };
