@@ -1,6 +1,7 @@
 const request = require("request");
 
 const mergeQueryParams = require("./utils/query-params-utils").mergeQueryParams;
+const argsToQueries = require("./utils/query-params-utils").argsToQueries;
 const gl = require("./utils/logs");
 
 const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
@@ -8,12 +9,12 @@ const apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
 const apiEndpoint = "/issues";
 
 
-module.exports = exports = function (action) {
+module.exports = exports = function (action, queries) {
     this.list = list;
 
     switch (action) {
         case 'list':
-            list();
+            list(argsToQueries(queries));
             break;
         default:
             gl.error('Not valid action, the actions are [list]');
@@ -25,12 +26,6 @@ module.exports = exports = function (action) {
  * @param queryParams {{string[]: string[]}}
  */
 function list(queryParams) {
-    queryParams = queryParams || {
-        "scope": "assigned_to_me",
-        "milestone": "2019-02",
-        "per_page": "100",
-        "page": "1"
-    };
     const url = `${gitlabUrlApi}${apiVersion}${apiEndpoint}?${mergeQueryParams(queryParams)}`;
     const options = {
         url,

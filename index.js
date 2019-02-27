@@ -6,15 +6,17 @@ const issues = require("./api/issues");
 const publishEnv = require("./api/utils/publish-env");
 const package = require("./package.json");
 
-loadProgram(true);
-loadProgram(false);
+program
+    .version(package.version, '-v, --version')
+    .option('-t, --token <token>', 'user personal token', function (arg) {
+        publishEnv('GL_TOKEN', arg);
+    });
 
-function loadProgram(readEnv) {
-    program
-        .version(package.version, '-v, --version')
-        .option('-t, --token <token>', 'user personal token', readEnv && function (arg) {
-            publishEnv('GL_TOKEN', arg);
-        })
-        .option('-i, --issues <action>', 'issues', !readEnv && issues)
-        .parse(process.argv);
-}
+// issues
+program
+    .command('issues <action> [queries...]')
+    .description('<action> valid actions are [list].\n[queries] query params to attach in the action')
+    .action(issues);
+
+program
+    .parse(process.argv);

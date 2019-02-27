@@ -1,4 +1,13 @@
 const reduce = require("lodash/reduce");
+const merge = require("lodash/merge");
+
+exports.argsToQueries = function (queries) {
+    if (queries) {
+        return queries.reduce(function (obj, q) {
+            return merge(obj, keyValue(q));
+        }, {});
+    }
+};
 
 exports.mergeQueryParams = function (queryParams) {
     return reduce(
@@ -7,3 +16,11 @@ exports.mergeQueryParams = function (queryParams) {
         ""
     );
 };
+
+function keyValue(arg) {
+    const obj = {};
+    let key = arg.split('=')[0];
+    let value = arg.split('=')[1];
+    obj[key] = value;
+    return obj;
+}
