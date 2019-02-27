@@ -11,8 +11,9 @@
     "gr": "./index.js"
   },
   "author": {
-    "name": "Guillermo",
-    "email": "guille@aleph.engineering"
+    "name": "wil92",
+    "email": "guille@aleph.engineering",
+    "url": "https://github.com/wil92"
   },
   "license": "MIT",
   "dependencies": {
