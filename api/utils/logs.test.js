@@ -32,5 +32,5 @@ describe('logs', function () {
             const args = ['test', 'for', 'reduce'];
             expect(gl.reduce(args)).to.equal('test for reduce');
         });
-    })
+    });
 });

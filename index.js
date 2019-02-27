@@ -4,10 +4,10 @@ const program = require("commander");
 
 const issues = require("./api/issues");
 const publishEnv = require("./api/utils/publish-env");
-const package = require("./package.json");
+const packageJson = require("./package.json");
 
 program
-    .version(package.version, '-v, --version')
+    .version(packageJson.version, '-v, --version')
     .option('-t, --token <token>', 'user personal token', function (arg) {
         publishEnv('GL_TOKEN', arg);
     })
