@@ -19,8 +19,8 @@ exports.mergeQueryParams = function (queryParams) {
 
 function keyValue(arg) {
     const obj = {};
-    let key = arg.split('=')[0];
-    let value = arg.split('=')[1];
+    let key = arg.split("=")[0];
+    let value = arg.split("=")[1];
     obj[key] = value;
     return obj;
 }
