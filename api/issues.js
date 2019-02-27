@@ -1,10 +1,10 @@
 const request = require("request");
 
 const mergeQueryParams = require("./utils/query-params-utils").mergeQueryParams;
+const gl = require("./utils/logs");
 
 const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
 const apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
-const verbose = process.env['GL_VERBOSE'] || 'error';
 const apiEndpoint = "/issues";
 
 /**
@@ -38,14 +38,6 @@ exports.list = function (queryParams) {
             calculate(info);
         }
     });
-};
-
-const gl = {
-    logs: ['error', 'info', 'log'],
-    log: function (msg) {this.weight('log') <= this.weight(verbose) && console.log(msg)},
-    info: function (msg) {this.weight('info') <= this.weight(verbose) && console.info(msg)},
-    error: function (msg) {this.weight('error') <= this.weight(verbose) && console.error(msg)},
-    weight: function (log) {return this.logs.indexOf(log) === -1 ? this.logs.length : this.logs.indexOf(log)}
 };
 
 function calculate(infoData) {
