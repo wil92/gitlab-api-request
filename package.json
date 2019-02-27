@@ -1,11 +1,14 @@
 {
   "name": "gitlab-api-request",
   "version": "1.0.0",
-  "description": "",
+  "description": "Script for make request to the gitlab API",
   "main": "index.js",
   "scripts": {
     "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "gl": "./index.js"
   },
   "author": {
     "name": "Guillermo",

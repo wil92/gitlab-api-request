@@ -2,36 +2,17 @@
 
 Script for make request to the gitlab API
 
-### Prerequisites
-
-#### 1. Install node and npm ([https://nodejs.org/en/download/package-manager](https://nodejs.org/en/download/package-manager))
-```
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
 
 ### Installing
 
-#### 1. Clone project
 ```
-git clone https://gitlab.com/wil92/wankar-server.git
+npm install gitlab-api-request -g
 ```
-
-#### 2. Development environment configuration:
-- Export this environment variables
-
-  * `GL_TOKEN`: User personal token for access to the gitlab api. ex: `faDdf234AD`. (**required**)
-  * `GL_URL`: Gitlab repository url. ex: `https://gitlab.com`.
-  * `GL_API_VERSION`: Gitlab repository API version. ex: `v4`.
-  * `GL_ENDPOINT`: port for expose the project database, ex: `issues`. (**required**)
 
 
 ## Testing code
 
-### Running code tests
-```
-npm test
-```
+not yet
 
 ## Built With
 
