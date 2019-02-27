@@ -1,6 +1,6 @@
 {
   "name": "gitlab-api-request",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "description": "Script for make request to the gitlab API",
   "main": "index.js",
   "scripts": {
@@ -32,5 +32,15 @@
   },
   "nyc": {
     "include": "api/**/*.js"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wil92/gitlab-api-request"
+  },
+  "keywords": [
+    "git",
+    "gitlab",
+    "script"
+  ],
+  "homepage": "https://github.com/wil92/gitlab-api-request/blob/master/README.md"
 }
