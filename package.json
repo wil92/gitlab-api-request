@@ -4,20 +4,33 @@
   "description": "Script for make request to the gitlab API",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint -c .eslintrc api/**/*.js index.js",
+    "test": "mocha --ui bdd --recursive ./api",
+    "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./api"
   },
   "bin": {
     "gr": "./index.js"
   },
   "author": {
-    "name": "Guillermo",
-    "email": "guille@aleph.engineering"
+    "name": "wil92",
+    "email": "guille@aleph.engineering",
+    "url": "https://github.com/wil92"
   },
   "license": "MIT",
   "dependencies": {
     "commander": "^2.19.0",
     "lodash": "^4.17.11",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-spies": "^1.0.0",
+    "eslint": "^5.14.1",
+    "mocha": "^5.2.0",
+    "mock-require": "^3.0.3",
+    "nyc": "^13.3.0"
+  },
+  "nyc": {
+    "include": "api/**/*.js"
   }
 }

@@ -4,3 +4,7 @@ package-lock.json
 
 # IDE stuff
 .idea
+
+# test and coverage
+.nyc_output
+coverage

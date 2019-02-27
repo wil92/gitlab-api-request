@@ -13,14 +13,52 @@ npm install -g gitlab-api-request
 
 After install the library just type `gr -h` in a terminal and see the documentation.
 
-### Issues command
+### Options
 
-An example for see all the estimation time, you can use the next example:
+#### option `-v / --version`
+
+Output the version number
+
+#### option `-t <token> / --token <token>`
+
+Gitlab personal token
+
+#### option `-l <level> / --logs <level>`
+
+Logs level `error (only show errors)`, `info (show errors and info logs)`, `log (show any log)` (default: "error")
+
+#### option `-a <version> / --api <version>`
+
+Api version (default: "v4")
+
+#### option `-u <url> / --url <utl>`
+
+Gitlab url (default: "https://gitlab.com")
+
+#### option `-h / --help`
+
+Output usage information
+
+### command `issues`
+
+#### action: `list`
+
+List of issues. In the example are filter by `milestone`:
+
 ```
-gr -logs info -token 3aSAkG6bisadf2345-sRU issues my-estimations "milestone"="2019-02"
+gr --token <user-token> issues list "milestone"="2019-02"
 ```
 
-the result will be something like this:
+#### action: `my-estimations`
+
+Estimation and spend time of the filter issues. In the example the issues are filter by `milestone`:
+
+```
+gr --token <user-token> issues my-estimations "milestone"="2019-02"
+```
+
+result:
+
 ```
 Estimate 48.5
 Spent 0
@@ -30,7 +68,21 @@ Issues 17
 
 ## Testing code
 
-not yet
+```
+npm test
+```
+
+For generate the coverage you can use the next script:
+
+```
+npm run test:cov
+```
+
+## Linting code
+
+```
+npm run lint
+```
 
 ## Built With
 
