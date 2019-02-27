@@ -7,11 +7,24 @@ const gitlabUrlApi = process.env['GL_URL'] || "https://gitlab.com";
 const apiVersion = `/api/${process.env['GL_API_VERSION'] || "v4"}`;
 const apiEndpoint = "/issues";
 
+
+module.exports = exports = function (action) {
+    this.list = list;
+
+    switch (action) {
+        case 'list':
+            list();
+            break;
+        default:
+            gl.error('Not valid action, the actions are [list]');
+    }
+};
+
 /**
  *
  * @param queryParams {{string[]: string[]}}
  */
-exports.list = function (queryParams) {
+function list(queryParams) {
     queryParams = queryParams || {
         "scope": "assigned_to_me",
         "milestone": "2019-02",
@@ -32,13 +45,18 @@ exports.list = function (queryParams) {
         if (error) {
             return gl.error('issue', error);
         }
-        if (response.statusCode === 200) {
-            var info = JSON.parse(body);
-            gl.log(info);
-            calculate(info);
+        var info = JSON.parse(body);
+        switch (response.statusCode) {
+            case 200:
+                gl.log(info);
+                calculate(info);
+                break;
+            case 401:
+                gl.error('issue', info.message);
+                break;
         }
     });
-};
+}
 
 function calculate(infoData) {
     let time = 0;

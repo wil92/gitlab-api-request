@@ -1,3 +1,12 @@
-const issues = require("./api/issues");
+#!/usr/bin/env node
 
-issues.list();
+const program = require("commander");
+
+const issues = require("./api/issues");
+const package = require("./package.json");
+
+
+program
+    .version(package.version, '-v, --version')
+    .option('-i, --issues <action>', 'issues', issues, 'list')
+    .parse(process.argv);
