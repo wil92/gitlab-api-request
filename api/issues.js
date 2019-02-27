@@ -22,7 +22,7 @@ const issues = function (action, queries) {
     }
 };
 
-issues.gitlabUrlApi= '';
+issues.gitlabUrlApi = '';
 issues.apiVersion = '';
 issues.apiEndpoint = "/issues";
 
@@ -32,28 +32,16 @@ issues.apiEndpoint = "/issues";
  */
 issues.list = function list(queryParams) {
     const url = `${issues.gitlabUrlApi}${issues.apiVersion}${issues.apiEndpoint}?${mergeQueryParams(queryParams)}`;
-    const options = {
-        url,
-        headers: {
-            'PRIVATE-TOKEN': process.env['GL_TOKEN'] || ''
-        }
-    };
+    const options = {url, headers: {'PRIVATE-TOKEN': process.env['GL_TOKEN'] || ''}};
 
     gl.info(url);
     issues.makeRequest(options, issues.showList);
 };
 
 issues.myEstimations = function myEstimations(queryParams) {
-    queryParams = merge(queryParams, {
-        "scope": "assigned_to_me"
-    });
+    queryParams = merge(queryParams, {"scope": "assigned_to_me"});
     const url = `${issues.gitlabUrlApi}${issues.apiVersion}${issues.apiEndpoint}?${mergeQueryParams(queryParams)}`;
-    const options = {
-        url,
-        headers: {
-            'PRIVATE-TOKEN': process.env['GL_TOKEN'] || ''
-        }
-    };
+    const options = {url, headers: {'PRIVATE-TOKEN': process.env['GL_TOKEN'] || ''}};
 
     gl.info(url);
     issues.makeRequest(options, issues.calculate);
