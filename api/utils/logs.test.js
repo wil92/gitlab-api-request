@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const gl = require('../../api/utils/logs');
+const gl = require('./logs');
 
 describe('logs', function () {
     it('expect the defined logs', function () {
