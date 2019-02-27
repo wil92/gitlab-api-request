@@ -15,9 +15,9 @@ After install the library just type `gr -h` in a terminal and see the documentat
 
 ### Issues command
 
-An example for see all the estimation time, you can use the next example:
+For see all the estimation time, you can use the next example:
 ```
-gr -logs info -token 3aSAkG6bisadf2345-sRU issues my-estimations "milestone"="2019-02"
+gr --logs info --token 3aSAkG6bisadf2345-sRU issues my-estimations "milestone"="2019-02"
 ```
 
 the result will be something like this:
