@@ -9,3 +9,4 @@ package-lock.json
 # test and coverage
 .nyc_output
 coverage
+api/**/*.test.js
