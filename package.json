@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint -c .eslintrc api/**/*.js index.js",
-    "start": "node index",
     "test": "mocha --ui bdd --recursive ./api",
     "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./api"
   },

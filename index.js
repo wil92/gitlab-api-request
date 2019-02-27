@@ -8,7 +8,7 @@ const packageJson = require("./package.json");
 
 program
     .version(packageJson.version, "-v, --version")
-    .option("-t, --token <token>", "user personal token", function (arg) {
+    .option("-t, --token <token>", "gitlab personal token", function (arg) {
         publishEnv("GL_TOKEN", arg);
     })
     .option("-l, --logs <level>", "logs level [error, info, log]", function (arg) {
