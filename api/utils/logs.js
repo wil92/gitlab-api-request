@@ -11,8 +11,7 @@ module.exports = exports = {
         this.weight('info') <= this.weight(verbose) && console.info(this.reduce(arguments));
     },
     error: function () {
-        const verbose = process.env['GL_VERBOSE'] || 'error';
-        this.weight('error') <= this.weight(verbose) && console.error(this.reduce(arguments));
+        console.error(this.reduce(arguments));
         process.exit(1);
     },
     reduce: function (args) {
