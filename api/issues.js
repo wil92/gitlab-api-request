@@ -22,7 +22,7 @@ module.exports = exports = function (action, queries) {
             list(argsToQueries(queries));
             break;
         case 'my-estimations':
-            myEstimations();
+            myEstimations(argsToQueries(queries));
             break;
         default:
             gl.error('Not valid action, the actions are [list]');
