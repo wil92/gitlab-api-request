@@ -3,10 +3,28 @@
 Script for make request to the gitlab API
 
 
-### Installing
+## Installing
 
 ```
-npm install gitlab-api-request -g
+npm install -g gitlab-api-request
+```
+
+## Getting Started
+
+After install the library just type `gr -h` in a terminal and see the documentation.
+
+### Issues command
+
+An example for see all the estimation time, you can use the next example:
+```
+gr -logs info -token 3aSAkG6bisadf2345-sRU issues my-estimations "milestone"="2019-02"
+```
+
+the result will be something like this:
+```
+Estimate 48.5
+Spent 0
+Issues 17
 ```
 
 
