@@ -11,6 +11,9 @@ program
     .option('-t, --token <token>', 'user personal token', function (arg) {
         publishEnv('GL_TOKEN', arg);
     })
+    .option('-l, --logs <level>', 'logs level [error, info, log]', function (arg) {
+        publishEnv('GL_VERBOSE', arg);
+    }, 'error')
     .option('-u, --url <url>', 'gitlab url', function (arg) {
         publishEnv('GL_URL', arg);
     }, 'https://gitlab.com');
