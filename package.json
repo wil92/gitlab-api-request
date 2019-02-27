@@ -1,6 +1,6 @@
 {
   "name": "gitlab-api-request",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Script for make request to the gitlab API",
   "main": "index.js",
   "scripts": {
