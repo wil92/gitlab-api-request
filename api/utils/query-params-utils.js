@@ -7,6 +7,7 @@ exports.argsToQueries = function (queries) {
             return merge(obj, keyValue(q));
         }, {});
     }
+    return [];
 };
 
 exports.mergeQueryParams = function (queryParams) {

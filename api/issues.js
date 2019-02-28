@@ -10,15 +10,17 @@ const issues = function (action, queries) {
     issues.gitlabUrlApi = process.env["GL_URL"] || "https://gitlab.com";
     issues.apiVersion = `/api/${process.env["GL_API_VERSION"] || "v4"}`;
 
-    switch (action) {
-        case "list":
-            issues.list(argsToQueries(queries));
-            break;
-        case "my-estimations":
-            issues.myEstimations(argsToQueries(queries));
-            break;
-        default:
-            gl.error("Not valid action, the actions are [list, my-estimations]");
+    if (action) {
+        switch (action) {
+            case "list":
+                issues.list(argsToQueries(queries));
+                break;
+            case "my-estimations":
+                issues.myEstimations(argsToQueries(queries));
+                break;
+            default:
+                gl.error("Not valid action, the actions are [list, my-estimations]");
+        }
     }
 };
 
@@ -27,24 +29,26 @@ issues.apiVersion = "";
 issues.apiEndpoint = "/issues";
 
 /**
+ * List of issues
  *
  * @param queryParams {{string[]: string[]}}
+ * @param callback? {function (responseBody: Object)}
  */
-issues.list = function list(queryParams) {
+issues.list = function list(queryParams, callback) {
     const url = `${issues.gitlabUrlApi}${issues.apiVersion}${issues.apiEndpoint}?${mergeQueryParams(queryParams)}`;
     const options = {url, headers: {"PRIVATE-TOKEN": process.env["GL_TOKEN"] || ""}};
 
     gl.info(url);
-    issues.makeRequest(options, issues.showList);
+    issues.makeRequest(options, callback || issues.showList);
 };
 
-issues.myEstimations = function myEstimations(queryParams) {
+issues.myEstimations = function myEstimations(queryParams, callback) {
     queryParams = merge(queryParams, {"scope": "assigned_to_me"});
     const url = `${issues.gitlabUrlApi}${issues.apiVersion}${issues.apiEndpoint}?${mergeQueryParams(queryParams)}`;
     const options = {url, headers: {"PRIVATE-TOKEN": process.env["GL_TOKEN"] || ""}};
 
     gl.info(url);
-    issues.makeRequest(options, issues.calculate);
+    issues.makeRequest(options, callback || issues.calculate);
 };
 
 issues.makeRequest = function makeRequest(options, callback) {
