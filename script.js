@@ -25,7 +25,7 @@ program
 // issues
 program
     .command("issues <action> [queries...]")
-    .description("<action> valid actions are [list, my-estimations]. [queries] query params to attach in the action")
+    .description("the actions are [list, my-estimations] and [queries] are a list of query params to attach in the request")
     .action(issues);
 
 program
