@@ -1,3 +1,8 @@
+/**
+ * issues api module
+ * @module api/issues
+ */
+
 const merge = require("lodash/merge");
 
 const utils = require("./utils");
@@ -8,6 +13,11 @@ const gl = utils.logs;
 const makeRequest = require("./utils/api-request").makeRequest;
 
 
+/**
+ * Issues constructor
+ * @param action {'list' | 'my-estimations'} action to execute
+ * @param queries {string[]} list of query params
+ */
 module.exports = function (action, queries) {
     module.exports.gitlabUrlApi = process.env["GL_URL"] || "https://gitlab.com";
     module.exports.apiVersion = `/api/${process.env["GL_API_VERSION"] || "v4"}`;
@@ -26,16 +36,27 @@ module.exports = function (action, queries) {
     }
 };
 
+/**
+ * Gitlab api url
+ * @type {string}
+ */
 module.exports.gitlabUrlApi = "";
+/**
+ * Gitlab api version
+ * @type {string}
+ */
 module.exports.apiVersion = "";
+/**
+ * Gitlab api resource url
+ * @type {string}
+ */
 module.exports.apiEndpoint = "/issues";
 
 /**
  * List of issues
  *
- * @see ./utils/api-request
- * @param queryParams {{string[]: string[]}}
- * @param callback? {function (responseBody: Object)}
+ * @param queryParams {{}}
+ * @param callback?
  */
 module.exports.list = function (queryParams, callback) {
     const url = `${module.exports.gitlabUrlApi}${module.exports.apiVersion}${module.exports.apiEndpoint}?${mergeQueryParams(queryParams)}`;
@@ -45,6 +66,12 @@ module.exports.list = function (queryParams, callback) {
     makeRequest(options, callback || module.exports.showList);
 };
 
+/**
+ * List of issues assigned to the user
+ *
+ * @param queryParams {{}}
+ * @param callback?
+ */
 module.exports.myEstimations = function (queryParams, callback) {
     queryParams = merge(queryParams, {"scope": "assigned_to_me"});
     const url = `${module.exports.gitlabUrlApi}${module.exports.apiVersion}${module.exports.apiEndpoint}?${mergeQueryParams(queryParams)}`;
@@ -54,11 +81,21 @@ module.exports.myEstimations = function (queryParams, callback) {
     makeRequest(options, callback || module.exports.calculate);
 };
 
+/**
+ * Show in `console.log` the list of issues
+ *
+ * @param infoData body from server
+ */
 module.exports.showList = function showList(infoData) {
     console.log("List of issues");
     console.log(infoData);
 };
 
+/**
+ * Show in `console.log` the estimated, spend and issues of the current user
+ *
+ * @param infoData body from server
+ */
 module.exports.calculate = function calculate(infoData) {
     let estimateTime = 0;
     let issues = 0;
