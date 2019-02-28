@@ -8,17 +8,17 @@ const gl = utils.logs;
 const makeRequest = require("./utils/api-request").makeRequest;
 
 
-const issues = function (action, queries) {
-    issues.gitlabUrlApi = process.env["GL_URL"] || "https://gitlab.com";
-    issues.apiVersion = `/api/${process.env["GL_API_VERSION"] || "v4"}`;
+module.exports = function (action, queries) {
+    module.exports.gitlabUrlApi = process.env["GL_URL"] || "https://gitlab.com";
+    module.exports.apiVersion = `/api/${process.env["GL_API_VERSION"] || "v4"}`;
 
     if (action) {
         switch (action) {
             case "list":
-                issues.list(argsToQueries(queries));
+                module.exports.list(argsToQueries(queries));
                 break;
             case "my-estimations":
-                issues.myEstimations(argsToQueries(queries));
+                module.exports.myEstimations(argsToQueries(queries));
                 break;
             default:
                 gl.error("Not valid action, the actions are [list, my-estimations]");
@@ -26,39 +26,40 @@ const issues = function (action, queries) {
     }
 };
 
-issues.gitlabUrlApi = "";
-issues.apiVersion = "";
-issues.apiEndpoint = "/issues";
+module.exports.gitlabUrlApi = "";
+module.exports.apiVersion = "";
+module.exports.apiEndpoint = "/issues";
 
 /**
  * List of issues
  *
+ * @see ./utils/api-request
  * @param queryParams {{string[]: string[]}}
  * @param callback? {function (responseBody: Object)}
  */
-issues.list = function list(queryParams, callback) {
-    const url = `${issues.gitlabUrlApi}${issues.apiVersion}${issues.apiEndpoint}?${mergeQueryParams(queryParams)}`;
+module.exports.list = function (queryParams, callback) {
+    const url = `${module.exports.gitlabUrlApi}${module.exports.apiVersion}${module.exports.apiEndpoint}?${mergeQueryParams(queryParams)}`;
     const options = {url, headers: {"PRIVATE-TOKEN": process.env["GL_TOKEN"] || ""}};
 
     gl.info(url);
-    makeRequest(options, callback || issues.showList);
+    makeRequest(options, callback || module.exports.showList);
 };
 
-issues.myEstimations = function myEstimations(queryParams, callback) {
+module.exports.myEstimations = function (queryParams, callback) {
     queryParams = merge(queryParams, {"scope": "assigned_to_me"});
-    const url = `${issues.gitlabUrlApi}${issues.apiVersion}${issues.apiEndpoint}?${mergeQueryParams(queryParams)}`;
+    const url = `${module.exports.gitlabUrlApi}${module.exports.apiVersion}${module.exports.apiEndpoint}?${mergeQueryParams(queryParams)}`;
     const options = {url, headers: {"PRIVATE-TOKEN": process.env["GL_TOKEN"] || ""}};
 
     gl.info(url);
-    makeRequest(options, callback || issues.calculate);
+    makeRequest(options, callback || module.exports.calculate);
 };
 
-issues.showList = function showList(infoData) {
+module.exports.showList = function showList(infoData) {
     console.log("List of issues");
     console.log(infoData);
 };
 
-issues.calculate = function calculate(infoData) {
+module.exports.calculate = function calculate(infoData) {
     let estimateTime = 0;
     let issues = 0;
     let spentTime = 0;
@@ -73,6 +74,3 @@ issues.calculate = function calculate(infoData) {
     console.log("Spent", spentTime / 3600);
     console.log("Issues", issues);
 };
-
-
-module.exports = exports = issues;
