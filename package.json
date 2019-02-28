@@ -9,7 +9,7 @@
     "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./api"
   },
   "bin": {
-    "gr": "./index.js"
+    "gr": "script.js"
   },
   "author": {
     "name": "wil92",

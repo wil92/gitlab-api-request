@@ -1,8 +1,8 @@
 const merge = require("lodash/merge");
 
-const mergeQueryParams = require("./utils/query-params-utils").mergeQueryParams;
-const argsToQueries = require("./utils/query-params-utils").argsToQueries;
-const gl = require("./utils/logs");
+const mergeQueryParams = require("./utils").queryParamsUtils.mergeQueryParams;
+const argsToQueries = require("./utils").queryParamsUtils.argsToQueries;
+const gl = require("./utils").logs;
 
 
 const issues = function (action, queries) {
