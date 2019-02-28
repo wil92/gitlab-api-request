@@ -1,12 +1,14 @@
 const merge = require("lodash/merge");
 
-const mergeQueryParams = require("./utils").queryParamsUtils.mergeQueryParams;
-const argsToQueries = require("./utils").queryParamsUtils.argsToQueries;
-const gl = require("./utils").logs;
+const utils = require("./utils");
+
+const mergeQueryParams = utils.queryParamsUtils.mergeQueryParams;
+const argsToQueries = utils.queryParamsUtils.argsToQueries;
+const gl = utils.logs;
+const makeRequest = require("./utils/api-request").makeRequest;
 
 
 const issues = function (action, queries) {
-
     issues.gitlabUrlApi = process.env["GL_URL"] || "https://gitlab.com";
     issues.apiVersion = `/api/${process.env["GL_API_VERSION"] || "v4"}`;
 
@@ -39,7 +41,7 @@ issues.list = function list(queryParams, callback) {
     const options = {url, headers: {"PRIVATE-TOKEN": process.env["GL_TOKEN"] || ""}};
 
     gl.info(url);
-    issues.makeRequest(options, callback || issues.showList);
+    makeRequest(options, callback || issues.showList);
 };
 
 issues.myEstimations = function myEstimations(queryParams, callback) {
@@ -48,25 +50,7 @@ issues.myEstimations = function myEstimations(queryParams, callback) {
     const options = {url, headers: {"PRIVATE-TOKEN": process.env["GL_TOKEN"] || ""}};
 
     gl.info(url);
-    issues.makeRequest(options, callback || issues.calculate);
-};
-
-issues.makeRequest = function makeRequest(options, callback) {
-    require("request")(options, function (error, response, body) {
-        if (error) {
-            return gl.error("issue", error);
-        }
-        var info = JSON.parse(body);
-        switch (response.statusCode) {
-            case 200:
-                gl.log(info);
-                callback(info);
-                break;
-            case 401:
-                gl.error("issue", info.message);
-                break;
-        }
-    });
+    makeRequest(options, callback || issues.calculate);
 };
 
 issues.showList = function showList(infoData) {

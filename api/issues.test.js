@@ -3,18 +3,22 @@ const spies = require("chai-spies");
 const mock = require("mock-require");
 
 chai.use(spies);
-
 const expect = chai.expect;
 
-let requestStatus, requestBody, requestError;
 const noop = function () {
 };
-mock("request", function (option, callback) {
-    callback(requestError, requestStatus, requestBody);
-});
 process.env["GL_VERBOSE"] = "NO_VERBOSE";
 
+let makeRequest = chai.spy(noop);
+mock("./utils/api-request", {makeRequest: makeRequest});
+mock.reRequire("./issues");
+
 describe("issues", function () {
+    after(function () {
+        mock.stopAll();
+        mock.reRequire("./issues");
+    });
+
     describe("module", function () {
         let issues;
 
@@ -47,14 +51,9 @@ describe("issues", function () {
             issues.apiVersion = "v4";
         });
 
-        afterEach(function () {
-            chai.spy.restore(issues);
-        });
-
         it("should list the user's issues", function () {
-            chai.spy.on(issues, "makeRequest", noop);
             issues.list({});
-            expect(issues.makeRequest).to.have.been.called.with({
+            expect(makeRequest).to.have.been.called.with({
                 url: "https://gitlab.comv4/issues?",
                 headers: {"PRIVATE-TOKEN": ""}
             }, issues.showList);
@@ -69,14 +68,9 @@ describe("issues", function () {
             issues.apiVersion = "v4";
         });
 
-        afterEach(function () {
-            chai.spy.restore(issues);
-        });
-
         it("should calculate the user's estimated time", function () {
-            chai.spy.on(issues, "makeRequest", noop);
             issues.myEstimations({});
-            expect(issues.makeRequest).to.have.been.called.with({
+            expect(makeRequest).to.have.been.called.with({
                 url: "https://gitlab.comv4/issues?scope=assigned_to_me",
                 headers: {"PRIVATE-TOKEN": ""}
             }, issues.calculate);
@@ -91,9 +85,6 @@ describe("issues", function () {
 
         afterEach(function () {
             chai.spy.restore(console);
-            requestStatus = 200;
-            requestBody = "";
-            requestError = null;
         });
 
         it("should showList the list of issues", function () {
@@ -107,27 +98,6 @@ describe("issues", function () {
             chai.spy.on(console, "log", noop);
             issues.calculate([{}]);
             expect(console.log).to.have.been.called.exactly(3);
-        });
-
-        it("should make a request and trigger the callback function with 200", function () {
-            requestStatus = {statusCode: 200};
-            requestBody = "{}";
-            issues.makeRequest({url: "http://test.com"}, function (info) {
-                expect(info).to.deep.equal({});
-            });
-        });
-
-        it("should make a request and trigger the callback function with 401", function () {
-            requestStatus = {statusCode: 401};
-            requestBody = "{\"message\": \"error\"}";
-            issues.makeRequest({url: "http://test.com"}, function (info) {
-                expect(info).to.deep.equal({});
-            });
-        });
-
-        it("should make a request and trigger an error", function () {
-            requestError = new Error("test");
-            issues.makeRequest({url: "http://test.com"}, function (info) {});
         });
     });
 });
