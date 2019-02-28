@@ -7,7 +7,6 @@ const expect = chai.expect;
 
 const noop = function () {
 };
-process.env["GL_VERBOSE"] = "NO_VERBOSE";
 
 let makeRequest = chai.spy(noop);
 mock("./utils/api-request", {makeRequest: makeRequest});

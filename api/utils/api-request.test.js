@@ -7,12 +7,19 @@ let requestStatus, requestBody, requestError;
 mock("request", function (option, callback) {
     callback(requestError, requestStatus, requestBody);
 });
+mock.reRequire("./api-request");
+
+process.env["GL_VERBOSE"] = "NO_VERBOSE";
 
 describe("api-request", function () {
     afterEach(function () {
         requestStatus = 200;
         requestBody = "";
         requestError = null;
+    });
+
+    after(function () {
+        mock.stopAll();
     });
 
     it("should make a request and trigger the callback function with 200", function () {
