@@ -27,13 +27,13 @@ program
 // config
 program
     .command("config <action> [data]")
-    .description("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set token=\"MY_TOKEN\"\n\t\t  get token")
+    .description("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set <config-name>=<config-value>\n\t\t  get <config-name>")
     .action(config);
 
 // issues
 program
     .command("issues <action> [queries...]")
-    .description("the actions are [list, my-estimations] and [queries] are a list of query params to attach in the request")
+    .description("actions over issues api.\n\tUsage:\n\tgr issues list [[query param]...]\n\t\t  my-estimations [[query param]...]")
     .action(issues);
 
 program
