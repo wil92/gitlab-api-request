@@ -26,7 +26,7 @@ program
 
 // config
 program
-    .command("config <action> <data>")
+    .command("config <action> [data]")
     .description("gr global configurations")
     .action(config);
 
