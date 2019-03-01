@@ -10,6 +10,7 @@ const homedir = os.homedir();
 const configFilePath = path.resolve(homedir, ".grconfig");
 
 module.exports.readConfig = function (mergeWithEnv) {
+    mergeWithEnv = true;
     const configString = fs.existsSync(configFilePath) ? fs.readFileSync(configFilePath, "utf8") : null;
     let configData = configString ? TOML.parse(configString) : {};
     mergeWithEnv && (configData = merge(configData, envConfigs()));
@@ -22,6 +23,8 @@ module.exports.writeConfig = function (config) {
 
 function envConfigs() {
     forEach(process.env, function (value, key) {
-        console.log(key, value);
+        if (key.startsWith("GR_")) {
+            console.log(key, value);
+        }
     });
 }

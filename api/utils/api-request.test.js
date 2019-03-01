@@ -9,7 +9,7 @@ mock("request", function (option, callback) {
 });
 mock.reRequire("./api-request");
 
-process.env["GL_VERBOSE"] = "NO_VERBOSE";
+process.env["GR_VERBOSE"] = "NO_VERBOSE";
 
 describe("api-request", function () {
     afterEach(function () {

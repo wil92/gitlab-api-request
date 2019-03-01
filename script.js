@@ -12,16 +12,16 @@ const packageJson = require("./package.json");
 program
     .version(packageJson.version, "-v, --version")
     .option("-t, --token <token>", "gitlab personal token", function (arg) {
-        publishEnv("GL_TOKEN", arg);
+        publishEnv("GR_TOKEN", arg);
     })
     .option("-l, --logs <level>", "logs level [error, info, log]", function (arg) {
-        publishEnv("GL_VERBOSE", arg);
+        publishEnv("GR_VERBOSE", arg);
     }, "error")
     .option("-a, --api <version>", "api version", function (arg) {
-        publishEnv("GL_API_VERSION", arg);
+        publishEnv("GR_API_VERSION", arg);
     }, "v4")
     .option("-u, --url <url>", "gitlab url", function (arg) {
-        publishEnv("GL_URL", arg);
+        publishEnv("GR_URL", arg);
     }, "https://gitlab.com");
 
 // config
