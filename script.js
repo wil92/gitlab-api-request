@@ -27,7 +27,7 @@ program
 // config
 program
     .command("config <action> [data]")
-    .description("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set <config-name>=<config-value>\n\t\t  get <config-name>")
+    .description("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set <config-name>=<config-value>\n\t\t  unset <config-name>\n\t\t  get <config-name>")
     .action(config);
 
 // issues

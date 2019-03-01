@@ -26,7 +26,15 @@ module.exports = function (action, data) {
                 break;
             }
             const value = configData[data];
-            console.log(data + "=" + (value || "Undefined"));
+            console.log(value || "Undefined");
+            break;
+        case "unset":
+            if (isNil(data)) {
+                emptyData();
+                break;
+            }
+            !isNil(configData[data]) && delete configData[data];
+            configUtils.writeConfig(configData);
             break;
     }
 };
@@ -36,9 +44,10 @@ function emptyData() {
 }
 
 function help() {
-    console.log("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set <config-name>=<config-value>\n\t\t  get <config-name>");
+    console.log("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set <config-name>=<config-value>\n\t\t  unset <config-name>\n\t\t  get <config-name>");
     console.log("Actions information");
     console.log("\thelp: output config usage information");
     console.log("\tset: set global configuration parameter\n\t\tExample: gr config set token=\"MY_TOKEN\"");
+    console.log("\tunset: unset global configuration parameter\n\t\tExample: gr config unset token");
     console.log("\tget: get global configuration parameter\n\t\tExample: gr config get token");
 }
