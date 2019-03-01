@@ -33,7 +33,7 @@ program
 // issues
 program
     .command("issues <action> [queries...]")
-    .description("actions over issues api.\n\tUsage:\n\tgr issues list [[query param]...]\n\t\t  my-estimations [[query param]...]")
+    .description("actions over issues api.\n\tUsage:\n\tgr issues help\n\t\t  list [[query param]...]\n\t\t  my-estimations [[query param]...]")
     .action(issues);
 
 program

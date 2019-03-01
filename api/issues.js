@@ -25,14 +25,15 @@ module.exports = function (action, queries) {
 
     if (action) {
         switch (action) {
+            case "help":
+                module.exports.help();
+                break;
             case "list":
                 module.exports.list(argsToQueries(queries));
                 break;
             case "my-estimations":
                 module.exports.myEstimations(argsToQueries(queries));
                 break;
-            default:
-                gl.error("Not valid action, the actions are [list, my-estimations]");
         }
     }
 };
@@ -111,4 +112,12 @@ module.exports.calculate = function calculate(infoData) {
     console.log("Estimate", estimateTime / 3600);
     console.log("Spent", spentTime / 3600);
     console.log("Issues", issues);
+};
+
+module.exports.help = function () {
+    console.log("actions over issues api.\n\tUsage:\n\tgr issues help\n\t\t  list [[query param]...]\n\t\t  my-estimations [[query param]...]");
+    console.log("Actions information");
+    console.log("\thelp: output issues usage information");
+    console.log("\tlist: show the list of issues\n\t\tExample: gr issues list \"milestone\"=\"EXAMPLE\"");
+    console.log("\tmy-estimations: show estimation time, spend time and number of issues\n\t\tExample: gr issues my-estimations \"milestone\"=\"EXAMPLE\"");
 };
