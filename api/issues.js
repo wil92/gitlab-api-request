@@ -11,6 +11,7 @@ const mergeQueryParams = utils.queryParamsUtils.mergeQueryParams;
 const argsToQueries = utils.queryParamsUtils.argsToQueries;
 const gl = utils.logs;
 const makeRequest = require("./utils/api-request").makeRequest;
+const configUtils = utils.configUtils;
 
 
 /**
@@ -19,8 +20,8 @@ const makeRequest = require("./utils/api-request").makeRequest;
  * @param queries {string[]} list of query params
  */
 module.exports = function (action, queries) {
-    module.exports.gitlabUrlApi = process.env["GR_URL"] || "https://gitlab.com";
-    module.exports.apiVersion = `/api/${process.env["GL_API_VERSION"] || "v4"}`;
+    module.exports.gitlabUrlApi = configUtils.readConfig(true).url || "https://gitlab.com";
+    module.exports.apiVersion = `/api/${configUtils.readConfig(true).apiVersion || "v4"}`;
 
     if (action) {
         switch (action) {
@@ -60,7 +61,7 @@ module.exports.apiEndpoint = "/issues";
  */
 module.exports.list = function (queryParams, callback) {
     const url = `${module.exports.gitlabUrlApi}${module.exports.apiVersion}${module.exports.apiEndpoint}?${mergeQueryParams(queryParams)}`;
-    const options = {url, headers: {"PRIVATE-TOKEN": process.env["GR_TOKEN"] || ""}};
+    const options = {url, headers: {"PRIVATE-TOKEN": configUtils.readConfig(true).token || ""}};
 
     gl.info(url);
     makeRequest(options, callback || module.exports.showList);
@@ -75,7 +76,7 @@ module.exports.list = function (queryParams, callback) {
 module.exports.myEstimations = function (queryParams, callback) {
     queryParams = merge(queryParams, {"scope": "assigned_to_me"});
     const url = `${module.exports.gitlabUrlApi}${module.exports.apiVersion}${module.exports.apiEndpoint}?${mergeQueryParams(queryParams)}`;
-    const options = {url, headers: {"PRIVATE-TOKEN": process.env["GR_TOKEN"] || ""}};
+    const options = {url, headers: {"PRIVATE-TOKEN": configUtils.readConfig(true).token || ""}};
 
     gl.info(url);
     makeRequest(options, callback || module.exports.calculate);
