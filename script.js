@@ -22,6 +22,12 @@ program
         publishEnv("GL_URL", arg);
     }, "https://gitlab.com");
 
+// config
+program
+    .command("config <action> [value]")
+    .description("gr global configurations")
+    .action(issues);
+
 // issues
 program
     .command("issues <action> [queries...]")
