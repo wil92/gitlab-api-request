@@ -39,6 +39,6 @@ describe("config", function () {
     it("should get a configuration value", function () {
         chai.spy.on(console, "log");
         config("get", "token");
-        expect(console.log).to.have.been.called.with("token=test");
+        expect(console.log).to.have.been.called.with("test");
     });
 });
