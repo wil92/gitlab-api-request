@@ -3,7 +3,9 @@
 const program = require("commander");
 
 const gr = require("./index");
+
 const issues = gr.issues;
+const config = gr.config;
 const publishEnv = gr.utils.publishEnv;
 const packageJson = require("./package.json");
 
@@ -24,9 +26,9 @@ program
 
 // config
 program
-    .command("config <action> [value]")
+    .command("config <action> <data>")
     .description("gr global configurations")
-    .action(issues);
+    .action(config);
 
 // issues
 program
