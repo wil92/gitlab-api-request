@@ -27,7 +27,7 @@ program
 // config
 program
     .command("config <action> [data]")
-    .description("gr global configurations")
+    .description("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set token=\"MY_TOKEN\"\n\t\t  get token")
     .action(config);
 
 // issues
