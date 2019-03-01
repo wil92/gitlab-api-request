@@ -13,33 +13,65 @@ npm install -g gitlab-api-request
 
 After install the library just type `gr -h` in a terminal and see the documentation.
 
-### Options
+## Options
 
-#### option `-v / --version`
+### option `-v / --version`
 
 Output the version number
 
-#### option `-t <token> / --token <token>`
+### option `-t <token> / --token <token>`
 
 Gitlab personal token
 
-#### option `-l <level> / --logs <level>`
+### option `-l <level> / --logs <level>`
 
 Logs level `error (only show errors)`, `info (show errors and info logs)`, `log (show any log)` (default: "error")
 
-#### option `-a <version> / --api <version>`
+### option `-a <version> / --api <version>`
 
 Api version (default: "v4")
 
-#### option `-u <url> / --url <utl>`
+### option `-u <url> / --url <utl>`
 
 Gitlab url (default: "https://gitlab.com")
 
-#### option `-h / --help`
+### option `-h / --help`
 
 Output usage information
 
+## Commands
+
+### command `config`
+
+Action over **gr** global configurations.
+
+#### action `set`
+
+Set a configuration parameter in global configurations
+
+```
+gr config set "token"="MY_TOKEN"
+```
+
+#### action `get`
+
+Get a configuration parameter value from global configurations
+
+```
+gr config get token
+```
+
+#### action `unset`
+
+Unset a configuration parameter from global configurations
+
+```
+gr config unset token
+```
+
 ### command `issues`
+
+Allow actions over gitlab issues api
 
 #### action: `list`
 
