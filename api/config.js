@@ -36,5 +36,9 @@ function emptyData() {
 }
 
 function help() {
-    console.log("help");
+    console.log("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set <config-name>=<config-value>\n\t\t  get <config-name>");
+    console.log("Actions information");
+    console.log("\thelp: output config usage information");
+    console.log("\tset: set global configuration parameter\n\t\tExample: gr config set token=\"MY_TOKEN\"");
+    console.log("\tget: get global configuration parameter\n\t\tExample: gr config get token");
 }
