@@ -10,11 +10,11 @@ module.exports = function (action, data) {
     let configData = configUtils.readConfig();
     switch (action) {
         case "help":
-            help();
+            module.exports.help();
             break;
         case "set":
             if (isNil(data)) {
-                emptyData();
+                module.exports.emptyData();
                 break;
             }
             configData = merge(configData, keyValue(data));
@@ -22,7 +22,7 @@ module.exports = function (action, data) {
             break;
         case "get":
             if (isNil(data)) {
-                emptyData();
+                module.exports.emptyData();
                 break;
             }
             const value = configData[data];
@@ -30,7 +30,7 @@ module.exports = function (action, data) {
             break;
         case "unset":
             if (isNil(data)) {
-                emptyData();
+                module.exports.emptyData();
                 break;
             }
             !isNil(configData[data]) && delete configData[data];
@@ -39,15 +39,15 @@ module.exports = function (action, data) {
     }
 };
 
-function emptyData() {
+module.exports.emptyData = function () {
     gl.error("[data] can't be empty");
-}
+};
 
-function help() {
+module.exports.help = function () {
     console.log("gr global configurations.\n\tUsage:\n\tgr config help\n\t\t  set <config-name>=<config-value>\n\t\t  unset <config-name>\n\t\t  get <config-name>");
     console.log("Actions information");
     console.log("\thelp: output config usage information");
     console.log("\tset: set global configuration parameter\n\t\tExample: gr config set token=\"MY_TOKEN\"");
     console.log("\tunset: unset global configuration parameter\n\t\tExample: gr config unset token");
     console.log("\tget: get global configuration parameter\n\t\tExample: gr config get token");
-}
+};
