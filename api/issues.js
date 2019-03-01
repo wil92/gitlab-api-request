@@ -11,7 +11,7 @@ const mergeQueryParams = utils.queryParamsUtils.mergeQueryParams;
 const argsToQueries = utils.queryParamsUtils.argsToQueries;
 const gl = utils.logs;
 const makeRequest = require("./utils/api-request").makeRequest;
-const configUtils = utils.configUtils;
+const configUtils = require("./utils/config-utils");
 
 
 /**

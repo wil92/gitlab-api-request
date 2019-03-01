@@ -10,6 +10,11 @@ const noop = function () {
 
 let makeRequest = chai.spy(noop);
 mock("./utils/api-request", {makeRequest: makeRequest});
+mock("./utils/config-utils", {
+    readConfig: function () {
+        return {};
+    }
+});
 mock.reRequire("./issues");
 
 describe("issues", function () {
